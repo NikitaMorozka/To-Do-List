@@ -1,4 +1,4 @@
-package com.nikita.todolist.todolist;
+package com.nikita.todolist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
