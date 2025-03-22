@@ -1,5 +1,4 @@
-package com.nikita.todolist.dto;
-
+package com.nikita.todolist.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -13,11 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToDoListRequest {
+public class ToDoListGetResponse {
     private String title;
     private String description;
     private String status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") private LocalDateTime dueDate;
-    //    private Integer priority; // Опционально
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") private LocalDateTime createdAt;//когда задача была создана
 }

@@ -1,6 +1,6 @@
 package com.nikita.todolist.core.validation;
 
-import com.nikita.todolist.dto.ToDoListRequest;
+import com.nikita.todolist.dto.request.ToDoListRequest;
 import com.nikita.todolist.dto.ValidationError;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

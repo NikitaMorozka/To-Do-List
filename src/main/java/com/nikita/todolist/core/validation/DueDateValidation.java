@@ -1,6 +1,6 @@
 package com.nikita.todolist.core.validation;
 
-import com.nikita.todolist.dto.ToDoListRequest;
+import com.nikita.todolist.dto.request.ToDoListRequest;
 import com.nikita.todolist.dto.ValidationError;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,13 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 
 class DueDateValidation implements Validation{
+
+    private final ErrorValidationFactory errorValidationFactory;
+
+
     public Optional<ValidationError> validate(ToDoListRequest request) {
         return (request.getDueDate() == null || checkDate(request.getDueDate()))
-                ? Optional.of(new ValidationError("Status", "Must not be empty and date note in past!"))
+                ? Optional.of(errorValidationFactory.processing("ERROR_CODE_2"))
                 : Optional.empty();
     }
 

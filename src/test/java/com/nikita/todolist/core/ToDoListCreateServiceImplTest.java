@@ -1,8 +1,8 @@
 package com.nikita.todolist.core;
-import com.nikita.todolist.core.services.ToDoListServiceImpl;
+import com.nikita.todolist.core.services.ToDoListCreateServiceImpl;
 import com.nikita.todolist.core.validation.ToDoRequestValidator;
-import com.nikita.todolist.dto.ToDoListRequest;
-import com.nikita.todolist.dto.ToDoListResponse;
+import com.nikita.todolist.dto.request.ToDoListRequest;
+import com.nikita.todolist.dto.response.ToDoListCreateResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,13 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ToDoListServiceImplTest {
+class ToDoListCreateServiceImplTest {
     @Mock
     ToDoListRequest request;
     @Mock
     ToDoRequestValidator toDoRequestValidator;
 
-    @InjectMocks ToDoListServiceImpl toDoListServiceImpl;
+    @InjectMocks
+    ToDoListCreateServiceImpl toDoListCreateServiceImpl;
 
     @Test
     void shouldPopulateResponse() {
@@ -33,7 +34,7 @@ class ToDoListServiceImplTest {
         when(request.getDueDate()).thenReturn(LocalDateTime.now().plusDays(7L));
         when(toDoRequestValidator.validate(request)).thenReturn(List.of());
 
-        ToDoListResponse response = toDoListServiceImpl.createTask(request);
+        ToDoListCreateResponse response = toDoListCreateServiceImpl.createTask(request);
 
         assertEquals(response.getTitle(), request.getTitle());
         assertEquals(response.getDescription(), request.getDescription());
