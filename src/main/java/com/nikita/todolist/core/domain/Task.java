@@ -1,22 +1,16 @@
 package com.nikita.todolist.core.domain;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Table(name = "task")
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Task {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // генерируем числа по порядку
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "title", nullable = false)
@@ -26,15 +20,10 @@ public class Task {
     private String description;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private Boolean status;
 
-    @Column(name = "due_date", nullable = false)
-    private LocalDateTime dueDate;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime created_at;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 }

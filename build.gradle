@@ -31,6 +31,7 @@ dependencies {
 
     implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.2.5')
     implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     implementation('com.fasterxml.jackson.core:jackson-core:2.14.2')
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
