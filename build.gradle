@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.liquibase.gradle' version '2.2.0'
 }
 
 group = 'com.Nikita.ToDoList'
@@ -24,58 +25,52 @@ repositories {
 }
 
 dependencies {
-
-    implementation('mysql:mysql-connector-java:8.0.22')
-    implementation('org.hibernate:hibernate-core:6.5.0.Final')
-//    implementation ('org.liquibase:liquibase-core:4.27.0')
-
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.2.5')
-    implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-    implementation('com.fasterxml.jackson.core:jackson-core:2.14.2')
+    implementation 'org.hibernate:hibernate-core:6.5.0.Final'
+    implementation 'mysql:mysql-connector-java:8.0.22'
+
+    implementation 'org.liquibase:liquibase-core:4.27.0' // для работы в приложении
+
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.27.0' // для generateChangelog
+    liquibaseRuntime 'info.picocli:picocli:4.7.5'
+    liquibaseRuntime 'mysql:mysql-connector-java:8.0.22'
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
-    implementation('com.google.guava:guava:31.0.1-jre')
+    implementation 'com.google.guava:guava:31.0.1-jre'
 
-    compileOnly('org.projectlombok:lombok:1.18.32')
-    annotationProcessor('org.projectlombok:lombok:1.18.32')
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-//    implementation 'ch.qos.logback:logback-classic:0.9.26'
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test:3.2.5')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
     testImplementation 'org.mockito:mockito-core:5.15.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.15.2'
-    testImplementation('com.h2database:h2:2.2.224')
-    testImplementation('org.hamcrest:hamcrest:2.2')
-
+    testImplementation 'com.h2database:h2:2.2.224'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.0'
+    testImplementation 'uk.org.webcompere:model-assert:1.0.0'
 
-
-    testImplementation('uk.org.webcompere:model-assert:1.0.0')
-
-    testCompileOnly('org.projectlombok:lombok:1.18.32')
-    testAnnotationProcessor('org.projectlombok:lombok:1.18.32')
-
-
-
-
-
-
-//
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-web'
-//    compileOnly 'org.projectlombok:lombok'
-//    runtimeOnly 'com.h2database:h2'
-//    runtimeOnly 'com.mysql:mysql-connector-j'
-//    annotationProcessor 'org.projectlombok:lombok'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-//
-//    implementation('com.fasterxml.jackson.core:jackson-core:2.14.2')
-//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+liquibase {
+    activities {
+        main {
+            changelogFile 'src/main/resources/db/changelog/changelog-master.xml'
+            url 'jdbc:mysql://localhost:3306/todo_app'
+            username 'root'
+            password '12345678'
+            driver 'com.mysql.cj.jdbc.Driver'
+        }
+    }
+    runList = 'main'
 }
